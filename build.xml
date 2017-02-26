@@ -18,6 +18,12 @@
 			</manifest>
 			<zipgroupfileset dir="lib" includes="*.jar" />
 		</jar>
+		<jar jarfile="FindFile.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="easai.util.FindFile" />
+			</manifest>
+			<zipgroupfileset dir="lib" includes="*.jar" />
+		</jar>
 		</target>
 	<property name="ECLIPSE_HOME" value="../../Program Files/eclipse/" />
 	<property name="debuglevel" value="source,lines,vars" />

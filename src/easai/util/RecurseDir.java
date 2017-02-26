@@ -28,6 +28,9 @@ public abstract class RecurseDir {
 	 */
 	public void applyCommand(String dirName) {
 		try {
+			if(dirName==null){
+				throw new Exception ("Directory name not set");
+			}
 			File dir = new File(dirName);
 			String updir = dir.getParent();
 			String path = dir.getAbsolutePath();
