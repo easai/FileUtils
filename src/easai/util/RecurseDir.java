@@ -32,7 +32,6 @@ public abstract class RecurseDir {
 				throw new Exception ("Directory name not set");
 			}
 			File dir = new File(dirName);
-			String updir = dir.getParent();
 			String path = dir.getAbsolutePath();
 			String list[] = dir.list();
 			if (list != null) {

@@ -6,12 +6,12 @@
               as the first entry and export the buildfile again. -->
 <project basedir="." default="jar" name="DirList">
 	<target name="jar" depends="build">
-			<jar jarfile="DirList.jar" basedir="bin">
-				<manifest>
-					<attribute name="Main-Class" value="easai.util.DirList" />
-				</manifest>
-				<zipgroupfileset dir="lib" includes="*.jar" />
-			</jar>
+		<jar jarfile="DirList.jar" basedir="bin">
+			<manifest>
+				<attribute name="Main-Class" value="easai.util.DirList" />
+			</manifest>
+			<zipgroupfileset dir="lib" includes="*.jar" />
+		</jar>
 		<jar jarfile="DirSum.jar" basedir="bin">
 			<manifest>
 				<attribute name="Main-Class" value="easai.util.DirSum" />
@@ -24,7 +24,7 @@
 			</manifest>
 			<zipgroupfileset dir="lib" includes="*.jar" />
 		</jar>
-		</target>
+	</target>
 	<property name="ECLIPSE_HOME" value="../../Program Files/eclipse/" />
 	<property name="debuglevel" value="source,lines,vars" />
 	<property name="target" value="1.8" />

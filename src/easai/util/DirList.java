@@ -6,6 +6,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class DirList extends RecurseDir {
@@ -50,23 +51,35 @@ public class DirList extends RecurseDir {
 	 * @param args
 	 */
 	public static void main(String args[]) {
+		Options opt = new Options();
 		try {
-			Options opt = new Options();
-			opt.addOption("?", OPTION_HELP, false, "print this message");
-			opt.addOption("d", OPTION_DIR, true, "print recursively the files in the specified directory");
+			opt.addOption("?", OPTION_HELP, false, "print this message");			
+
+			 Option option = Option.builder("d")
+				     .required(true)
+				     .longOpt(OPTION_DIR)
+				     .hasArgs()
+				     .desc("print recursively the files in the specified directory")
+				     .build();
+			
+			 opt.addOption(option);
+			 
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(opt, args);
-			if (cmd.hasOption("?") || args.length == 0) {
+			if (cmd.hasOption(OPTION_HELP)) {
 				HelpFormatter help = new HelpFormatter();
 				help.printHelp("UpdateKeyword", opt, true);
 			} else {
 				String dir[] = cmd.getOptionValues(OPTION_DIR);
-				for (String d : dir) {
-					new DirList(d);
+				if (dir != null) {
+					for (String d : dir) {
+						new DirList(d);
+					}
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			HelpFormatter help = new HelpFormatter();
+			help.printHelp("UpdateKeyword", opt, true);
 		}
 	}
 }

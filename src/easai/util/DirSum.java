@@ -6,6 +6,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class DirSum extends RecurseDir {
@@ -38,16 +39,17 @@ public class DirSum extends RecurseDir {
 	 * @param args
 	 */
 	public static void main(String args[]) {
+		Options opt = new Options();
 		try {
-			Options opt = new Options();
 			opt.addOption("?", OPTION_HELP, false, "print this message");
-			opt.addOption("d", OPTION_DIR, true,
-					"calculate recursively the sum of file sizes of files in the specified directory");
+			Option option = Option.builder("d").required(true).longOpt(OPTION_DIR).hasArgs()
+					.desc("calculate recursively the sum of file sizes of files in the specified directory").build();
+			opt.addOption(option);
+
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(opt, args);
-			if (cmd.hasOption(OPTION_HELP) || args.length == 0) {
-				HelpFormatter help = new HelpFormatter();
-				help.printHelp("UpdateKeyword", opt, true);
+			if (cmd.hasOption(OPTION_HELP)) {
+				throw new Exception();
 			} else {
 				long sum = 0;
 				String dir[] = cmd.getOptionValues(OPTION_DIR);
@@ -58,7 +60,8 @@ public class DirSum extends RecurseDir {
 				System.out.println(sum);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			HelpFormatter help = new HelpFormatter();
+			help.printHelp("UpdateKeyword", opt, true);
 		}
 	}
 }

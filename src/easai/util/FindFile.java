@@ -6,6 +6,7 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 
 public class FindFile extends RecurseDir {
@@ -23,8 +24,8 @@ public class FindFile extends RecurseDir {
 
 	@Override
 	public void executeOnFile(String fileName) {
-		try {		
-			if (fileName.endsWith(File.separator+pattern)) {
+		try {
+			if (fileName.endsWith(File.separator + pattern)) {
 				System.out.println(fileName);
 			}
 		} catch (Exception e) {
@@ -35,7 +36,7 @@ public class FindFile extends RecurseDir {
 	@Override
 	public void executeOnDirectory(String fileName) {
 		try {
-			if (fileName.endsWith(File.separator+pattern)) {
+			if (fileName.endsWith(File.separator + pattern)) {
 				System.out.println(fileName);
 			}
 		} catch (Exception e) {
@@ -52,23 +53,29 @@ public class FindFile extends RecurseDir {
 	 * @param args
 	 */
 	public static void main(String args[]) {
-		try {
-			Options opt = new Options();
+		Options opt = new Options();
+		try {		
 			opt.addOption("?", OPTION_HELP, false, "print this message");
-			opt.addOption("d", OPTION_DIR, true, "directory");
-			opt.addOption("f", OPTION_FILE, true, "file name");
+
+			Option option = Option.builder("f").required(true).longOpt(OPTION_FILE).hasArgs().desc("file name").build();
+			opt.addOption(option);
+
+			Option dirOption = Option.builder("d").required(true).longOpt(OPTION_DIR).hasArgs().desc("target directory")
+					.build();
+			opt.addOption(dirOption);
+
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(opt, args);
-			if (cmd.hasOption(OPTION_HELP) || args.length == 0) {
-				HelpFormatter help = new HelpFormatter();
-				help.printHelp("UpdateKeyword", opt, true);
+			if (cmd.hasOption(OPTION_HELP)) {
+				throw new Exception();
 			} else if (cmd.hasOption(OPTION_DIR) && cmd.hasOption(OPTION_FILE)) {
 				String dir = cmd.getOptionValue(OPTION_DIR);
 				String fileName = cmd.getOptionValue(OPTION_FILE);
 				new FindFile(fileName, dir);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			HelpFormatter help = new HelpFormatter();
+			help.printHelp("FindFile", opt, true);
 		}
 	}
 }
