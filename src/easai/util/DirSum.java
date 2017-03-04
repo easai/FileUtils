@@ -61,7 +61,7 @@ public class DirSum extends RecurseDir {
 			}
 		} catch (Exception e) {
 			HelpFormatter help = new HelpFormatter();
-			help.printHelp("UpdateKeyword", opt, true);
+			help.printHelp("DirSum", opt, true);
 		}
 	}
 }

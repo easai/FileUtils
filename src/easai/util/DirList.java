@@ -67,8 +67,7 @@ public class DirList extends RecurseDir {
 			CommandLineParser parser = new DefaultParser();
 			CommandLine cmd = parser.parse(opt, args);
 			if (cmd.hasOption(OPTION_HELP)) {
-				HelpFormatter help = new HelpFormatter();
-				help.printHelp("UpdateKeyword", opt, true);
+				throw new Exception();
 			} else {
 				String dir[] = cmd.getOptionValues(OPTION_DIR);
 				if (dir != null) {
@@ -79,7 +78,7 @@ public class DirList extends RecurseDir {
 			}
 		} catch (Exception e) {
 			HelpFormatter help = new HelpFormatter();
-			help.printHelp("UpdateKeyword", opt, true);
+			help.printHelp("DirList", opt, true);
 		}
 	}
 }

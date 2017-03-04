@@ -9,6 +9,7 @@
 		<jar jarfile="DirList.jar" basedir="bin">
 			<manifest>
 				<attribute name="Main-Class" value="easai.util.DirList" />
+				<attribute name="Class-Path" value=". lib" />
 			</manifest>
 			<zipgroupfileset dir="lib" includes="*.jar" />
 		</jar>
