@@ -72,6 +72,8 @@ public class FindFile extends RecurseDir {
 				String dir = cmd.getOptionValue(OPTION_DIR);
 				String fileName = cmd.getOptionValue(OPTION_FILE);
 				new FindFile(fileName, dir);
+			}else{
+				throw new Exception();
 			}
 		} catch (Exception e) {
 			HelpFormatter help = new HelpFormatter();

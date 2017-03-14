@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. -->
-<project basedir="." default="jar" name="DirList">
+
+<project basedir="." default="jar" name="FileUtils">
 	<target name="jar" depends="build">
 		<jar jarfile="DirList.jar" basedir="bin">
 			<manifest>
@@ -26,46 +22,33 @@
 			<zipgroupfileset dir="lib" includes="*.jar" />
 		</jar>
 	</target>
-	<property name="ECLIPSE_HOME" value="../../Program Files/eclipse/" />
-	<property name="debuglevel" value="source,lines,vars" />
-	<property name="target" value="1.8" />
-	<property name="source" value="1.8" />
-	<path id="FileUtils.classpath">
-		<pathelement location="bin" />
-	</path>
 	<target name="init">
 		<mkdir dir="bin" />
 		<copy includeemptydirs="false" todir="bin">
 			<fileset dir="src">
+				<exclude name="**/*.launch" />
 				<exclude name="**/*.java" />
 			</fileset>
 		</copy>
 	</target>
+    <path id="classpath">
+        <pathelement location="bin" />
+    	<pathelement location="lib/commons-cli-1.3.1.jar" />
+    	<pathelement location="lib/logback-classic-1.2.1.jar" />
+        <pathelement location="lib/logback-core-1.2.1.jar" />
+    	<pathelement location="lib/slf4j-api-1.7.24.jar" />    	    	        	
+    </path>
+	<target depends="init" name="build">
+		<javac destdir="bin" includeantruntime="false">
+			<src path="src" />
+			<classpath refid="classpath" />
+		</javac>
+		<copy file="files/logback.xml" todir="bin" />
+	</target>
 	<target name="clean">
 		<delete dir="bin" />
-	</target>
-	<target depends="clean" name="cleanall" />
-	<target depends="build-subprojects,build-project" name="build" />
-	<target name="build-subprojects" />
-	<target depends="init" name="build-project">
-		<echo message="${ant.project.name}: ${ant.file}" />
-		<javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-			<src path="src" />
-			<classpath refid="FileUtils.classpath" />
-		</javac>
-	</target>
-	<target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects" />
-	<target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-		<copy todir="${ant.library.dir}">
-			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
-		</copy>
-		<unzip dest="${ant.library.dir}">
-			<patternset includes="jdtCompilerAdapter.jar" />
-			<fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar" />
-		</unzip>
-	</target>
-	<target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter" />
-		<antcall target="build" />
+		<delete file="DirList.jar" />
+		<delete file="DirSum.jar" />
+		<delete file="FindFile.jar" />
 	</target>
 </project>
