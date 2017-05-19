@@ -1,5 +1,10 @@
+.svn
+log
 bin
+*~
 *.jar
+!lib/*
+*.ini
 
 # Windows image file caches
 Thumbs.db
